@@ -9,6 +9,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import io.github.theisson.webservices.dto.ClientRequestDTO;
 import io.github.theisson.webservices.dto.ClientResponseDTO;
 import io.github.theisson.webservices.services.application.CreateClient;
+import io.github.theisson.webservices.services.application.DeleteClient;
 import io.github.theisson.webservices.services.application.GetClient;
 import io.github.theisson.webservices.services.application.ListClients;
 import io.github.theisson.webservices.services.application.UpdateClient;
@@ -22,12 +23,20 @@ public class ClientController {
     private final ListClients listClients;
     private final CreateClient createClient;
     private final UpdateClient updateClient;
+    private final DeleteClient deleteClient;
 
-    public ClientController(GetClient getClient, ListClients listClients, CreateClient createClient, UpdateClient updateClient) {
+    public ClientController(
+        GetClient getClient, 
+        ListClients listClients, 
+        CreateClient createClient, 
+        UpdateClient updateClient, 
+        DeleteClient deleteClient
+    ) {
         this.getClient = getClient;
         this.listClients = listClients;
         this.createClient = createClient;
         this.updateClient = updateClient;
+        this.deleteClient = deleteClient;
     }
 
     @GetMapping
@@ -61,5 +70,12 @@ public class ClientController {
         ClientResponseDTO updatedClient = updateClient.execute(id, dto);
         
         return ResponseEntity.ok(updatedClient);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        deleteClient.execute(id);
+        
+        return ResponseEntity.noContent().build();
     }
 }
