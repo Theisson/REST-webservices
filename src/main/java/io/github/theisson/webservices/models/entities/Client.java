@@ -59,4 +59,25 @@ public class Client {
     public Integer getChildren() {
         return children;
     }
+
+    public void updateData(String name, String cpf, Double income, LocalDate birthDate, Integer children) {
+        this.name = name;
+        this.cpf = cpf;
+        this.income = income;
+        this.birthDate = birthDate;
+        this.children = children;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Client)) return false;
+        Client client = (Client) o;
+        return id != null && id.equals(client.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }
