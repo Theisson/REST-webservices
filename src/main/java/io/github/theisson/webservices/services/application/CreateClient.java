@@ -2,6 +2,7 @@ package io.github.theisson.webservices.services.application;
 
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import io.github.theisson.webservices.dto.ClientRequestDTO;
 import io.github.theisson.webservices.dto.ClientResponseDTO;
 import io.github.theisson.webservices.exceptions.DatabaseException;
@@ -17,6 +18,7 @@ public class CreateClient {
         this.clientRepository = clientRepository;
     }
 
+    @Transactional
     public ClientResponseDTO execute(ClientRequestDTO dto) {
         try {
             Client entity = new Client(
@@ -27,7 +29,7 @@ public class CreateClient {
                 dto.children()
             );
 
-            entity = clientRepository.save(entity);
+            entity = clientRepository.saveAndFlush(entity);
 
             return new ClientResponseDTO(entity);
         }

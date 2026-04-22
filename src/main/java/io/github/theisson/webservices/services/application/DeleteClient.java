@@ -17,7 +17,7 @@ public class DeleteClient {
     @Transactional
     public void execute(Long id) {
         if (!clientRepository.existsById(id)) {
-            throw new ResourceNotFoundException("Cliente não encontrado com id " + id);
+            throw new ResourceNotFoundException("Cliente não encontrado com id: " + id);
         }
 
         clientRepository.deleteById(id);

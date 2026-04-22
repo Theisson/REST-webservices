@@ -33,7 +33,7 @@ public class UpdateClient {
                 dto.children()
             );
 
-            entity = clientRepository.save(entity);
+            entity = clientRepository.saveAndFlush(entity);
 
             return new ClientResponseDTO(entity);
         }
